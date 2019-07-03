@@ -61,22 +61,6 @@ namespace WebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CruxMsgSubject",
-                schema: "web001",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 20, nullable: true),
-                    Code = table.Column<string>(maxLength: 20, nullable: true),
-                    Note = table.Column<string>(maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CruxMsgSubject", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DbVersion",
                 schema: "web001",
                 columns: table => new
@@ -270,42 +254,6 @@ namespace WebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CruxMember",
-                schema: "web001",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RegUserId = table.Column<int>(nullable: true),
-                    CreateDate = table.Column<DateTime>(nullable: false),
-                    ExitDate = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 20, nullable: false),
-                    No = table.Column<string>(maxLength: 10, nullable: false),
-                    LoginNo = table.Column<string>(maxLength: 50, nullable: true),
-                    SID = table.Column<string>(maxLength: 20, nullable: true),
-                    Birth = table.Column<DateTime>(nullable: false),
-                    Sex = table.Column<string>(maxLength: 1, nullable: true),
-                    Weight = table.Column<float>(nullable: true),
-                    Height = table.Column<float>(nullable: true),
-                    Phones = table.Column<string>(maxLength: 200, nullable: true),
-                    Addrs = table.Column<string>(maxLength: 500, nullable: true),
-                    Email = table.Column<string>(maxLength: 100, nullable: true),
-                    Note = table.Column<string>(maxLength: 200, nullable: true),
-                    NotifyEmails = table.Column<string>(maxLength: 1000, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CruxMember", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CruxMember_AspNetUsers_RegUserId",
-                        column: x => x.RegUserId,
-                        principalSchema: "web001",
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TnTaskNotify",
                 schema: "web001",
                 columns: table => new
@@ -377,174 +325,6 @@ namespace WebApp.Migrations
                         principalTable: "DefaultQtQueue",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CopdNote",
-                schema: "web001",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Created = table.Column<DateTime>(nullable: false),
-                    CreatorId = table.Column<int>(nullable: false),
-                    MemberId = table.Column<int>(nullable: false),
-                    Note = table.Column<string>(maxLength: 200, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CopdNote", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CopdNote_AspNetUsers_CreatorId",
-                        column: x => x.CreatorId,
-                        principalSchema: "web001",
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CopdNote_CruxMember_MemberId",
-                        column: x => x.MemberId,
-                        principalSchema: "web001",
-                        principalTable: "CruxMember",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CopdScale",
-                schema: "web001",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Created = table.Column<DateTime>(nullable: false),
-                    MemberId = table.Column<int>(nullable: false),
-                    Score_CAT = table.Column<int>(nullable: false),
-                    State_CAT = table.Column<string>(maxLength: 10, nullable: true),
-                    Score_mMRC = table.Column<int>(nullable: false),
-                    Score_COPD = table.Column<int>(nullable: false),
-                    Content = table.Column<string>(maxLength: 1000, nullable: true),
-                    CalcDate = table.Column<DateTime>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CopdScale", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CopdScale_CruxMember_MemberId",
-                        column: x => x.MemberId,
-                        principalSchema: "web001",
-                        principalTable: "CruxMember",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CopdVideo",
-                schema: "web001",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Created = table.Column<DateTime>(nullable: false),
-                    FileId = table.Column<string>(maxLength: 50, nullable: false),
-                    Name = table.Column<string>(maxLength: 100, nullable: true),
-                    Url = table.Column<string>(maxLength: 100, nullable: true),
-                    MemberId = table.Column<int>(nullable: true),
-                    UpdaterId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CopdVideo", x => x.Id);
-                    table.UniqueConstraint("AK_CopdVideo_FileId", x => x.FileId);
-                    table.ForeignKey(
-                        name: "FK_CopdVideo_CruxMember_MemberId",
-                        column: x => x.MemberId,
-                        principalSchema: "web001",
-                        principalTable: "CruxMember",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
-                        name: "FK_CopdVideo_AspNetUsers_UpdaterId",
-                        column: x => x.UpdaterId,
-                        principalSchema: "web001",
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CruxMessage",
-                schema: "web001",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    MemberId = table.Column<int>(nullable: false),
-                    SubjectId = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(maxLength: 100, nullable: true),
-                    Content = table.Column<string>(maxLength: 4000, nullable: true),
-                    SendTo = table.Column<string>(maxLength: 1000, nullable: true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    IsSuccess = table.Column<bool>(nullable: false),
-                    Result = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CruxMessage", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CruxMessage_CruxMember_MemberId",
-                        column: x => x.MemberId,
-                        principalSchema: "web001",
-                        principalTable: "CruxMember",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CruxMessage_CruxMsgSubject_SubjectId",
-                        column: x => x.SubjectId,
-                        principalSchema: "web001",
-                        principalTable: "CruxMsgSubject",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CruxVs",
-                schema: "web001",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    QueueName = table.Column<int>(nullable: false),
-                    DataType = table.Column<string>(maxLength: 20, nullable: true),
-                    State = table.Column<int>(nullable: false),
-                    CreationTime = table.Column<DateTime>(nullable: false),
-                    MeasureTime = table.Column<DateTime>(nullable: true),
-                    NextSendTime = table.Column<DateTime>(nullable: true),
-                    EndTime = table.Column<DateTime>(nullable: true),
-                    Content = table.Column<string>(maxLength: 2048, nullable: true),
-                    Remark = table.Column<string>(maxLength: 100, nullable: true),
-                    LastResult = table.Column<string>(maxLength: 2048, nullable: true),
-                    MemberId = table.Column<int>(nullable: true),
-                    CardNo = table.Column<string>(maxLength: 50, nullable: true),
-                    DeviceNo = table.Column<string>(maxLength: 50, nullable: true),
-                    VS_PK = table.Column<string>(maxLength: 50, nullable: true),
-                    FromGateway = table.Column<string>(maxLength: 10, nullable: true),
-                    IP = table.Column<string>(maxLength: 20, nullable: true),
-                    V1 = table.Column<float>(nullable: true),
-                    V2 = table.Column<float>(nullable: true),
-                    V3 = table.Column<float>(nullable: true),
-                    S1 = table.Column<string>(maxLength: 1, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CruxVs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CruxVs_CruxMember_MemberId",
-                        column: x => x.MemberId,
-                        principalSchema: "web001",
-                        principalTable: "CruxMember",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -678,129 +458,6 @@ namespace WebApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CopdNote_Created",
-                schema: "web001",
-                table: "CopdNote",
-                column: "Created");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CopdNote_CreatorId",
-                schema: "web001",
-                table: "CopdNote",
-                column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CopdNote_MemberId",
-                schema: "web001",
-                table: "CopdNote",
-                column: "MemberId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CopdScale_Created",
-                schema: "web001",
-                table: "CopdScale",
-                column: "Created");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CopdScale_MemberId",
-                schema: "web001",
-                table: "CopdScale",
-                column: "MemberId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CopdVideo_Created",
-                schema: "web001",
-                table: "CopdVideo",
-                column: "Created");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CopdVideo_MemberId",
-                schema: "web001",
-                table: "CopdVideo",
-                column: "MemberId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CopdVideo_UpdaterId",
-                schema: "web001",
-                table: "CopdVideo",
-                column: "UpdaterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CruxMember_LoginNo",
-                schema: "web001",
-                table: "CruxMember",
-                column: "LoginNo",
-                unique: true,
-                filter: "[LoginNo] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CruxMember_No",
-                schema: "web001",
-                table: "CruxMember",
-                column: "No",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CruxMember_RegUserId",
-                schema: "web001",
-                table: "CruxMember",
-                column: "RegUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CruxMember_SID",
-                schema: "web001",
-                table: "CruxMember",
-                column: "SID",
-                unique: true,
-                filter: "[SID] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CruxMessage_MemberId",
-                schema: "web001",
-                table: "CruxMessage",
-                column: "MemberId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CruxMessage_SubjectId",
-                schema: "web001",
-                table: "CruxMessage",
-                column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CruxMsgSubject_Code",
-                schema: "web001",
-                table: "CruxMsgSubject",
-                column: "Code",
-                unique: true,
-                filter: "[Code] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CruxVs_CreationTime",
-                schema: "web001",
-                table: "CruxVs",
-                column: "CreationTime");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CruxVs_MemberId",
-                schema: "web001",
-                table: "CruxVs",
-                column: "MemberId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CruxVs_VS_PK",
-                schema: "web001",
-                table: "CruxVs",
-                column: "VS_PK",
-                unique: true,
-                filter: "[VS_PK] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CruxVs_EndTime_QueueName_NextSendTime",
-                schema: "web001",
-                table: "CruxVs",
-                columns: new[] { "EndTime", "QueueName", "NextSendTime" });
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DefaultQtQueueTask_QueueId",
                 schema: "web001",
                 table: "DefaultQtQueueTask",
@@ -885,26 +542,6 @@ namespace WebApp.Migrations
                 schema: "web001");
 
             migrationBuilder.DropTable(
-                name: "CopdNote",
-                schema: "web001");
-
-            migrationBuilder.DropTable(
-                name: "CopdScale",
-                schema: "web001");
-
-            migrationBuilder.DropTable(
-                name: "CopdVideo",
-                schema: "web001");
-
-            migrationBuilder.DropTable(
-                name: "CruxMessage",
-                schema: "web001");
-
-            migrationBuilder.DropTable(
-                name: "CruxVs",
-                schema: "web001");
-
-            migrationBuilder.DropTable(
                 name: "DbVersion",
                 schema: "web001");
 
@@ -942,14 +579,6 @@ namespace WebApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles",
-                schema: "web001");
-
-            migrationBuilder.DropTable(
-                name: "CruxMsgSubject",
-                schema: "web001");
-
-            migrationBuilder.DropTable(
-                name: "CruxMember",
                 schema: "web001");
 
             migrationBuilder.DropTable(
