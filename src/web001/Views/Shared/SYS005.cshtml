@@ -1,0 +1,275 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<WebApp.Services.AppInfoSetting> AppInfo
+@{
+    ViewBag.Title = "排程任務";
+}
+
+@section Scripts
+    {
+    <script src="~/lib/require.js"></script>
+    <script type="text/javascript">
+        require.config({
+            urlArgs: "v=@AppInfo.Value.Version"
+        });
+    </script>
+    <script type="text/javascript">
+        require(["../scripts/webapp.sys/sys005.js"], function (m) {
+            m.startApp('/', '/sys005');
+        });
+    </script>
+}
+
+@section Styles
+    {
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+
+        blockquote {
+            font-size: inherit;
+        }
+
+        #table1 > tbody > tr {
+            cursor: pointer
+        }
+
+        @@media (max-width: 460px) {
+            .item_view {
+                width: 89vw
+            }
+        }
+    </style>
+}
+<div ng-cloak>
+
+    <!--主畫面#套用-->
+    <ng-include src="'MainCtrl'"></ng-include>
+
+    <!--主畫面 -->
+    <script id="MainCtrl" type="text/ng-template">
+        <!--MainCtrl-->
+        <div ng-controller="MainCtrl as ctl">
+
+            <div class="callout callout-info">
+                <h4>@ViewBag.Title</h4>
+                <p>
+                    系統定時執行的任務清冊
+                </p>
+            </div>
+
+            <div ng-show="ctl.FormInit.IsEnable &&  ctl.FormInit.IsPrimary" class="alert alert-info alert-dismissible" role="alert">
+                排程系統處於主要狀態，目前啟動中。
+            </div>
+
+            <div ng-show="ctl.FormInit.IsEnable && !ctl.FormInit.IsPrimary" class="alert alert-warning alert-dismissible" role="alert">
+                <strong>注意!</strong>排程系統處於備用狀態，目前未啟動。
+            </div>
+
+            <div ng-show="!ctl.FormInit.IsEnable" class="alert alert-danger alert-dismissible" role="alert">
+                <strong>注意!</strong>排程系統目前未啟動。
+            </div>
+
+            <!--新增列表-->
+            <ng-show ng-if="ctl.NewRecords[0]">
+                <h4>新增紀錄</h4>
+                <ng-include src="'Item'" ng-repeat="record in ctl.NewRecords"></ng-include>
+            </ng-show>
+
+            <ul class="nav nav-tabs" ng-if="ctl.Tabs[1]">
+                <li ng-repeat="x in ctl.Tabs" ng-class="x.IsFocus ? 'active' : ''">
+                    <a ng-click="x.focus()">{{x.Title}}<span span ng-if="x.IsCloseEnable">&nbsp;&nbsp;</span><span ng-if="x.IsCloseEnable" style="cursor:pointer" ng-click="x.close()" class="glyphicon glyphicon-remove"></span></a>
+                </li>
+            </ul>
+
+            <!--頁簽內容-->
+            <div ng-repeat="tab in ctl.Tabs">
+                <!--First Tab-->
+                <ng-show ng-if="$index == 0" ng-show="tab.IsFocus">
+                    <!--資料列表-->
+                    <h4>資料列表<button type="button" class="btn btn-link" ng-click="ctl.pageQuery();"><span class="glyphicon glyphicon-search"></span>查詢</button></h4>
+
+                    <!--查詢條件-->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group" ng-class="ctl.QryArgs.Name.Checked?'has-success':''">
+                                <div class="input-group">
+                                    <div class="input-group-addon">名稱</div>
+                                    <input type="text" class="form-control" ng-model="ctl.QryArgs.Name.Value" placeholder="" ng-change="ctl.QryArgs.Name.Checked = ctl.QryArgs.Name.Value ? true:false">
+                                    <div class="input-group-addon"><input type="checkbox" ng-model="ctl.QryArgs.Name.Checked" /></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="col-sm-6">
+                            <div class="form-group" ng-class="ctl.QryArgs.No.Checked?'has-success':''">
+                                <div class="input-group">
+                                    <div class="input-group-addon">學號</div>
+                                    <input type="text" class="form-control" ng-model="ctl.QryArgs.No.Value" placeholder="" ng-change="ctl.QryArgs.No.Checked = ctl.QryArgs.No.Value ? true:false">
+                                    <div class="input-group-addon"><input type="checkbox" ng-model="ctl.QryArgs.No.Checked" /></div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                    <ng-include src="'List'"></ng-include>
+
+                    <!--頁面索引-->
+                    <ng-include src="'Pager'"></ng-include>
+                </ng-show>
+
+            </div>
+
+            <!--對話盒容器-->
+            <ng-include ng-repeat="DialogCaller in [ctl.DialogCaller]" ng-if="DialogCaller" src="DialogCaller.Name"></ng-include>
+
+            <!--錯誤訊息-->
+            <div style="top:33%;position:fixed;left:25%;width:50%;z-index:10;" class="alert alert-danger" ng-show="ctl.Result != null && ctl.Result.Result != 'OK'">
+                {{ctl.Result.Message}}
+                <button type="button" class="close" ng-click="ctl.Result = null">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <!--列表樣板-->
+        <script id="List" type="text/ng-template">
+            <div class="table-responsive">
+
+                <table class="table table-hover" id="table1">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="x in ['啟用', '名稱', '狀態', '最後執行', '下次執行']">
+                                <button class="btn btn-link" ng-click="ctl.pageOrderBy(x)">{{x}}</button>
+                                <span class="orderby" ng-show="ctl.QryArgs.OrderBy.Value.Column === x" ng-class="{reverse: ctl.QryArgs.OrderBy.Value.Desc}"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat-start="x in ctl.Records" ng-click="ctl.recordView(x)" ng-style="{'color': x.IsEnable ? 'black' : 'gray'}">
+                            <td>{{x.IsEnable? '啟用':'停用'}}</td>
+                            <td>
+                                <span ng-if="x.Title">{{x.Title}}</span>
+                                <span ng-if="!x.Title">{{x.Name}}</span>
+                            </td>
+                            <td ng-switch="x.State">
+                                <span ng-switch-when="Success" class="text-success">成功</span>
+                                <span ng-switch-when="Empty"></span>
+                                <span ng-switch-when="Failure" class="text-danger">例外</span>
+                                <span ng-switch-when="Running" class="text-info">執行中</span>
+                                <span ng-switch-when="Cancel" class="text-warning">取消</span>
+                            </td>
+                            <td>{{x.LastRun | date:'yyyy/MM/dd HH:mm:ss'}}</td>
+                            <td>
+                                <span ng-if="x.NextRun && !ctl.isFuture(x.NextRun)">(目前)</span>
+                                <span ng-if="x.NextRun && ctl.isFuture(x.NextRun)">{{x.NextRun | date:'yyyy/MM/dd HH:mm:ss'}}</span>
+                                <span ng-if="!x.NextRun">(空)</span>
+                            </td>
+                        </tr>
+                        <tr ng-repeat-end ng-if="x.$SubRecord" ng-repeat="record in [x.$SubRecord]">
+                            <td colspan="5">
+                                <ng-include src="'Item'"></ng-include>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </script>
+
+        <!--項目樣板-->
+        <script id="Item" type="text/ng-template">
+
+            <form name="form" novalidate>
+                <div class="panel panel-default item_view">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-file"></span>
+                        <span>
+                            {{ctl.onGetRecordTitle(record)}}
+
+                        </span>
+                        <button type="button" class="close" ng-click="ctl.recordClose(record)"><span>&times;</span></button>
+                    </div>
+                    <div class="panel-body">
+                        @*<div class="form-group">
+                                <label class="control-label">Id</label>
+                                <p class="form-control-static">{{record.Id}}</p>
+                            </div>*@
+                        <div class="form-group">
+                            <label class="control-label">啟用</label>
+                            <p class="form-control-static">{{record.IsEnable ? "啟用":"停用"}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">名稱</label>
+                            <p class="form-control-static">{{record.Name}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">標題</label>
+                            <p class="form-control-static">{{record.Title}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">狀態</label>
+                            <p class="form-control-static" ng-switch="x.State">
+                                <span ng-switch-when="Success" class="text-success">成功</span>
+                                <span ng-switch-when="Empty"></span>
+                                <span ng-switch-when="Failure" class="text-danger">例外</span>
+                                <span ng-switch-when="Running" class="text-info">執行中</span>
+                                <span ng-switch-when="Cancel" class="text-warning">取消</span>
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">最後執行</label>
+                            <p class="form-control-static">{{record.LastRun | date:'yyyy/MM/dd HH:mm:ss'}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">下次執行</label>
+                            <p class="form-control-static">
+                                <span ng-if="x.NextRun && !ctl.isFuture(x.NextRun)">(目前)</span>
+                                <span ng-if="x.NextRun && ctl.isFuture(x.NextRun)">{{x.NextRun | date:'yyyy/MM/dd HH:mm:ss'}}</span>
+                                <span ng-if="!x.NextRun">(空)</span>
+                            </p>
+                        </div>
+                        @*<div class="form-group" ng-show="record.ExceptionTime">
+                                <label class="control-label">例外時間</label>
+                                <p class="form-control-static">{{record.ExceptionTime | date:'yyyy/MM/dd HH:mm:ss'}}</p>
+
+                            </div>
+                            <div class="form-group" ng-show="record.ExceptionContent">
+                                <label class="control-label">例外內容</label>
+                                <p class="form-control-static">{{record.ExceptionContent}}</p>
+                            </div>*@
+
+                        <button type="button" class="btn btn-primary" ng-click="ctl.invokeTaskNow(record)">立即執行排程</button>
+                        <button type="button" class="btn btn-primary" ng-show="!record.IsEnable" ng-click="ctl.taskSetEnable(record, true)">啟用排程</button>
+                        <button type="button" class="btn btn-primary" ng-show="record.IsEnable" ng-click="ctl.taskSetEnable(record, false)">停用排程</button>
+
+                    </div>
+                </div>
+
+            </form>
+        </script>
+
+    </script>
+    <!--頁面索引-->
+    <script id="Pager" type="text/ng-template">
+        <div class="row">
+            <div class="col-sm-2">
+                <label ng-if="ctl.Pager.Source.IsAll" style="color:royalblue">
+                    筆數:{{ctl.Pager.Source.Count + ctl.RecordsLogAttachCount}}
+                </label>
+                <label ng-if="!ctl.Pager.Source.IsAll" style="color:red">
+                    筆數:{{ctl.Pager.Source.Count + ctl.RecordsLogAttachCount}}以上
+                </label>
+            </div>
+            <div class="col-sm-8">
+                <nav>
+                    <ul class="pagination">
+                        <li ng-class="x.Active ? 'active' : (x.Enable ? '' : 'disabled' )" ng-repeat="x in ctl.Pager.Indexes"><a ng-click="ctl.pageMove(x.Index)">{{x.Name}}</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </script>
+
+    <!--當執行中-->
+    <div id="loading" class="loading" style="position:fixed;top:43%;left:43%;z-index:101;display:none">
+    </div>
+
+    <ng-include src="'@Url.Content("~/home/commonhtml")'"></ng-include>
+</div>

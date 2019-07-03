@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Tab";
+}
+
+@section Scripts
+{
+    <script src="~/lib/require.js"></script>
+    <script type="text/javascript">
+        requirejs.config({
+            urlArgs: "v=1.0.0"
+        });
+    </script>
+    <script type="text/javascript">requirejs(["../../scripts/webapp.demo/demo003.js"], function (m) {
+        m.startApp();
+    });</script>
+}
+
+<h2>@ViewBag.Title</h2>
+
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="#">Home</a></li>
+    <li role="presentation"><a href="#">Profile</a></li>
+    <li role="presentation"><a href="#">Messages</a></li>
+</ul>
+
+<hr/>
+
+<div ng-controller="MainCtrl as ctl">
+
+    <ul class="nav nav-tabs">
+        <li ng-repeat="x in ctl.Tabs" ng-class="x.Active ? 'active':''" ><a href="#" ng-click="ctl.tabClick(x)">{{x.Title}}</a></li>      
+    </ul>
+
+    <hr/>
+
+    <div class="form-group">
+        <label class="control-label" for="form-group-input">New Tab</label>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="new tab title" ng-model="title">            
+            <span class="input-group-btn">
+                <button class="btn btn-default" ng-click="ctl.tabAdd(title)">Add</button>
+            </span>
+        </div>
+    </div> 
+
+</div>
+

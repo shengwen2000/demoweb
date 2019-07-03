@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "";
+}
+
+@section Scripts
+{
+    <script src="~/lib/require.js"></script>
+    <script type="text/javascript">
+        requirejs.config({
+            urlArgs: "v=1.0.0"
+        });
+    </script>
+    <script type="text/javascript">requirejs(["../../scripts/webapp.demo/demo009.js"], function (m) {
+        m.startApp();
+    });</script>
+}
+
+<h2>@ViewBag.Title</h2>
+<div ng-controller="MainCtrl as ctl">
+    
+</div>
+

@@ -1,0 +1,40 @@
+﻿@using Microsoft.Extensions.Options
+@inject WebApp.Services.Menu.MenuService ms
+@inject IOptions<WebApp.Services.AppInfoSetting> AppInfo
+@{
+    var menus = ms.GetUserMenu(this.User);
+    ViewData["Title"] = "首頁";
+}
+
+
+<div class="row">
+
+    @foreach (var n in menus)
+    {
+        <div class="col-md-6">
+
+            <h2>@n.Node.Text</h2>
+            <div class="list-group">
+                @foreach (var c in n.Nodes)
+                {
+                    if (c.Nodes.Count == 0)
+                    {
+
+                        <a class="list-group-item" href="@Url.Content(c.Node.Entry)">@c.Node.Text</a>
+                    }
+                    else
+                    {
+                        <div class="list-group-item" style="font-weight:bold">@c.Node.Text</div>
+                        @foreach (var c1 in c.Nodes)
+                        {
+                            <a class="list-group-item" style="padding-left:2rem" href="@Url.Content(c1.Node.Entry)">@c1.Node.Text</a>
+                        }
+
+                    }
+                }
+
+            </div>
+
+        </div>
+    }
+</div>

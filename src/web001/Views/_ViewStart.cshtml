@@ -1,0 +1,14 @@
+﻿@using WebApp.Data
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    if (SignInManager.IsSignedIn(this.User))
+    {
+        Layout = "_Layout2U";
+    }
+    else
+    {
+        Layout = "_Layout2";
+    }
+
+}

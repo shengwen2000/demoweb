@@ -1,0 +1,239 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>   
+    <AssemblyName>Web001</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Web001</PackageId>
+    <UserSecretsId>aspnet-WebApp-fcebb46e-1cdc-4085-922b-9785b5948133</UserSecretsId>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <RootNamespace>WebApp</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="%2a%2a\**" />
+    <Compile Remove="log\**" />
+    <Content Remove="%2a%2a\**" />
+    <Content Remove="log\**" />
+    <Content Remove="temp\**" />
+    <EmbeddedResource Remove="%2a%2a\**" />
+    <EmbeddedResource Remove="log\**" />
+    <None Remove="%2a%2a\**" />
+    <None Remove="log\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\SysQueueTask.cs" />
+    <Compile Remove="Migrations\20190509160259_V026.cs" />
+    <Compile Remove="Migrations\20190509160259_V026.Designer.cs" />
+    <Compile Remove="Migrations\20190513001425_V027.cs" />
+    <Compile Remove="Migrations\20190513001425_V027.Designer.cs" />
+    <Compile Remove="Services\CopdQueueHandler.cs" />
+    <Compile Remove="Services\QueueTaskConfig.cs" />
+    <Compile Remove="Services\QueueTaskService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="appsettings.server.json" />
+    <Content Remove="tsconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\webapp.demo\demo001.ts" />
+    <None Remove="Scripts\webapp.demo\demo002.ts" />
+    <None Remove="Scripts\webapp.demo\demo003.ts" />
+    <None Remove="Scripts\webapp.demo\demo004.ts" />
+    <None Remove="Scripts\webapp.demo\demo005.ts" />
+    <None Remove="Scripts\webapp.demo\demo006.ts" />
+    <None Remove="Scripts\webapp.demo\demo007.ts" />
+    <None Remove="Scripts\webapp.demo\demo008.ts" />
+    <None Remove="Scripts\webapp.demo\demo009.ts" />
+    <None Remove="Scripts\webapp.demo\demo010.ts" />
+    <None Remove="Scripts\webapp.sys\sys010.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\lib\angular\angular-morris.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\angular\angular-morris.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\angular\angular-route.min.js.map" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <Content Include="Scripts\webapp.copd\copd001.ts" />
+    <Content Include="Scripts\webapp.copd\copd002.ts" />
+    <Content Include="Scripts\webapp.copd\copd003.ts" />
+    <Content Include="Scripts\webapp.copd\copd004.ts" />
+    <Content Include="Scripts\webapp.crux\crux001.ts" />
+    <Content Include="Scripts\webapp.crux\crux002.ts" />
+    <Content Include="Scripts\webapp.crux\crux003.ts" />
+    <Content Include="Scripts\webapp.demo\demo004.ts" />
+    <Content Include="Scripts\webapp.demo\demo005.ts" />
+    <Content Include="Scripts\webapp.demo\demo006.ts" />
+    <Content Include="Scripts\webapp.demo\demo007.ts" />
+    <Content Include="Scripts\webapp.demo\demo008.ts" />
+    <Content Include="Scripts\webapp.demo\demo009.ts" />
+    <Content Include="Scripts\webapp.demo\demo010.ts" />
+    <Content Include="Scripts\webapp.demo\demo003.ts" />
+    <Content Include="Scripts\webapp.demo\demo002.ts" />
+    <Content Include="Scripts\webapp.demo\demo001.ts" />
+    <Content Include="Scripts\webapp.sys\sys001.ts">
+    
+    </Content>
+    <Content Include="Scripts\webapp.sys\sys002.ts" />
+    <Content Include="Scripts\webapp.sys\sys003.ts">    
+    </Content>
+    <Content Include="Scripts\webapp.sys\sys010.ts" />
+    <Content Include="Scripts\webapp.test\test001.ts" />   
+    <Content Include="Scripts\webapp.sys\sys005.ts">     
+    </Content>
+  </ItemGroup>
+
+ 
+  <ItemGroup>
+   
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="2.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" /> 
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />   
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />   
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" PrivateAssets="All" />    
+    <PackageReference Include="MailKit" Version="2.2.0" />   
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />   
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.3" />
+    <PackageReference Include="Sendgrid" Version="9.11.0" />
+    <PackageReference Include="Shengwen.Primary" Version="1.0.6" />
+    <PackageReference Include="Shengwen.QueueTask" Version="1.0.8" />
+    <PackageReference Include="Shengwen.Scheduler" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>   
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>   
+
+  <ItemGroup>
+    <Content Update="Views\Account\ForgotPassword.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Account\ForgotPasswordConfirmation.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Account\Lockout.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Account\Login.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Account\Register.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Account\ResetPassword.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Account\ResetPasswordConfirmation.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Manage\Index.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Manage\SetPassword.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\Error.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\SYS001.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\SYS002.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\SYS003.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Test001.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\SYS005.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_LoginPartial2.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="wwwroot\lib\angular\angular-route.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\angular\angular-route.min.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\angular\angular-sanitize.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\angular\angular-sanitize.min.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\angular\angular-sanitize.min.js.map">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\angular\angular-touch.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\angular\angular-touch.min.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\angular\angular-touch.min.js.map">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\angular\angular.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\angular\angular.min.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\angular\angular.min.js.map">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="appsettings.server.json" />
+    <None Include="tsconfig.json" />
+    <None Include="wwwroot\lib\fastclick\fastclick.js" />
+    <None Include="wwwroot\lib\jquery-slimscroll\jquery.slimscroll.js" />
+    <None Include="wwwroot\lib\jquery-slimscroll\jquery.slimscroll.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Lib\angularjs-slider\rzslider.d.ts">
+     
+    </None>
+  </ItemGroup>
+
+  <!-- run typescript compile beore build -->
+  <Target Name="TypeScript Auto Compile" BeforeTargets="Build">
+    <Exec Command="tsc" WorkingDirectory="." ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="typescipt compile error $(ErrorCode)" />
+    <Message Condition="'$(ErrorCode)' == '0'" Importance="high" Text="type script compile success" />
+  </Target>
+
+</Project>

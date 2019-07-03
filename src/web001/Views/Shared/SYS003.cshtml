@@ -1,0 +1,270 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<WebApp.Services.AppInfoSetting> AppInfo
+@{
+    ViewBag.Title = "群組主檔";
+}
+
+@section Scripts {
+    <script src="~/lib/require.js"></script>
+    <script type="text/javascript">
+        require.config({
+            urlArgs: "v=@AppInfo.Value.Version"
+        });
+    </script>
+    <script type="text/javascript">
+        require(["../scripts/webapp.sys/sys003.js"], function (m) {
+            m.startApp('/', '/sys003');
+        });
+    </script>
+}
+
+@section Styles
+    {
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+
+        tr {
+            cursor: pointer
+        }
+
+        .mitemcheck {
+            color: darkblue;
+            font-weight: bold;
+        }
+    </style>
+}
+
+<div ng-cloak>
+
+    <!--主畫面#套用-->
+    <ng-include src="'MainCtrl'"></ng-include>
+
+    <!--主畫面 -->
+    <script id="MainCtrl" type="text/ng-template">
+        <!--MainCtrl-->
+        <div ng-controller="MainCtrl as ctl">
+
+            @*<div class="jumbotron">
+                    <h2>@ViewBag.Title</h2>
+                    <p>
+                        可對群組進行管理。
+                    </p>
+                    <p><button class="btn btn-primary" ng-click="ctl.recordNew()">新增群組</button></p>
+                </div>*@
+            <div class="callout callout-info">
+                <h4>@ViewBag.Title</h4>
+                <p><button class="btn btn-default" ng-click="ctl.recordNew()">新增群組</button></p>
+            </div>
+
+            <ul class="nav nav-tabs" ng-if="ctl.Tabs[1]">
+                <li ng-repeat="x in ctl.Tabs" ng-class="x.IsFocus ? 'active' : ''">
+                    <a ng-click="x.focus()">{{x.Title}}<span span ng-if="x.IsCloseEnable">&nbsp;&nbsp;</span><span ng-if="x.IsCloseEnable" style="cursor:pointer" ng-click="x.close()" class="glyphicon glyphicon-remove"></span></a>
+                </li>
+            </ul>
+            <!--頁簽內容-->
+            <div ng-repeat="tab in ctl.Tabs">
+                <!--List Tab-->
+                <ng-show ng-if="$index == 0" ng-show="tab.IsFocus">
+                    <!--資料列表-->
+                    <button type="button" class="btn btn-link" ng-click="ctl.query();"><span class="glyphicon glyphicon-refresh"></span>重新整理</button>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th ng-repeat="x in ['名稱', '描述']">
+                                        @*<button class="btn btn-link" ng-click="ctl.pageOrderBy(x)">{{x}}</button>
+                                            <span class="orderby" ng-show="ctl.QryArgs.OrderBy.Value.Column === x" ng-class="{reverse: ctl.QryArgs.OrderBy.Value.Desc}"></span>*@
+                                        {{x}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="x in ctl.Records" ng-click="ctl.recordView(x)">
+                                    <td>{{x.Title}}</td>
+                                    <td>{{x.Desc}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--頁面索引-->
+                    @*<ng-include src="'Pager'"></ng-include>*@
+                </ng-show>
+
+                <!--項目內容-->
+                <ng-show ng-if="tab.Id.startsWith('Item')" ng-show="tab.IsFocus">
+                    <ng-include ng-repeat="record in [tab.Content]" src="'Item'"></ng-include>
+                    <ng-include ng-repeat="menus in [tab.Content.Menus]" src="'Item2'" ng-if="tab.Content.$State ==1 "></ng-include>
+                    <ng-include ng-repeat="menus in [tab.Content.Menus]" src="'Item4'" ng-if="tab.Content.$State > 1 "></ng-include>
+                </ng-show>
+
+                <!--說明內容-->
+                <div ng-if="tab.Id.startsWith('Help')" ng-show="tab.IsFocus">
+                    <blockquote>
+                        <p>
+                            這是一個範例展示。
+                        </p>
+                    </blockquote>
+                </div>
+            </div>
+
+            <!--對話盒容器-->
+            <ng-include ng-repeat="DialogCaller in [ctl.DialogCaller]" ng-if="DialogCaller" src="DialogCaller.Name"></ng-include>
+
+            <!--錯誤訊息-->
+            <div style="top:33%;position:fixed;left:25%;width:50%;z-index:10;" class="alert alert-danger" ng-show="ctl.Result != null && ctl.Result.Result != 'OK'">
+                {{ctl.Result.Message}}
+                <button type="button" class="close" ng-click="ctl.Result = null">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+
+        <!--項目樣板-->
+        <script id="Item" type="text/ng-template">
+            <!--檢視-->
+            <div class="panel panel-default" ng-if="record.$State==1">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-file"></span>
+                    <span>
+                        {{ctl.onGetRecordTitle(record)}}
+                    </span>
+                    <button type="button" class="close" ng-click="ctl.recordClose(record)"><span>&times;</span></button>
+                </div>
+                <div class="panel-body">
+                    <form name="form" novalidate>
+                        <div class="form-group">
+                            <label class="col-sm-2 form-control-static">名稱</label>
+                            <p class="col-sm-10 form-control-static" ng-bind="record.Title"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 form-control-static">描述</label>
+                            <p class="col-sm-10 form-control-static" ng-bind="record.Desc"></p>
+
+                        </div>
+                    </form>
+
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="ctl.recordClose(record)">關閉</button>
+                    <button type="button" class="btn btn-default" ng-click="ctl.recordEdit(record)">編輯</button>
+                    <button type="button" class="btn btn-danger" ng-show="record.CanDelete" ng-click="ctl.recordDelete(record)"><span class="glyphicon glyphicon-floppy-remove"></span>刪除</button>
+                </div>
+            </div>
+
+
+            <!--編輯-->
+            <div class="panel panel-default" ng-if="record.$State >1">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-file"></span>
+                    <span>{{ctl.onGetRecordTitle(record)}}</span>
+                    <button type="button" class="close" ng-click="ctl.recordClose(record)"><span>&times;</span></button>
+                </div>
+                <div class="panel-body">
+                    <form name="form" novalidate>
+                        <div class="form-group">
+                            <label>*名稱</label>
+                            <input type="text" class="form-control" placeholder="" maxlength="50" ng-model="record.Title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>描述</label>
+                            <input type="text" class="form-control" placeholder="" maxlength="100" ng-model="record.Desc">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-default" ng-click="ctl.recordClose(record)">取消</button>
+                    <button type="button" class="btn btn-primary" ng-show="form.$valid" ng-click="ctl.recordSave(record);"><span class="glyphicon glyphicon-floppy-save"></span>儲存</button>
+                </div>
+            </div>
+        </script>
+
+        <!--擁有的功能檢視-->
+        <script id="Item2" type="text/ng-template">
+            <div class="panel panel-default">
+                <div class="panel-heading">群組擁有的功能</div>
+                <div class="panel-body">
+                    <!--頁簽標題-->
+                    <ul class="nav nav-tabs" ng-init="ctl.initMenu(this, menus)">
+                        <li ng-repeat="x in menus" ng-class="x == FMenu ? 'active' : ''" ng-if="x.ChkCount">
+                            <a ng-click="$parent.$parent.FMenu = x">
+                                <span>{{x.Text}}</span>
+                                <span ng-if="x.ChkCount" class="badge">{{x.ChkCount}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!--頁簽內容-->
+                    <div class="panel panel-default" ng-repeat="node in menus" ng-show="node == FMenu">
+                        <div class="panel-body">
+                            <ng-include src="'Item3'"></ng-include>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <!--功能表結構(檢視)-->
+        <script id="Item3" type="text/ng-template">
+            <ul>
+                <li ng-if="node.ChkCount">
+                    <span>{{node.Text}}</span>
+                    <ng-include src="'Item3'" ng-repeat="node in node.Nodes"></ng-include>
+                </li>
+            </ul>
+        </script>
+
+        <!--功能表結構(編輯)-->
+        <script id="Item4" type="text/ng-template">
+            <div class="panel panel-default">
+                <div class="panel-heading">群組擁有的功能</div>
+                <div class="panel-body">
+                    <!--頁簽標題-->
+                    <ul class="nav nav-tabs" ng-init="FMenu=menus[0]">
+                        <li ng-repeat="x in menus" ng-class="x == FMenu ? 'active' : ''">
+                            <a ng-click="$parent.FMenu = x">
+                                <span>{{x.Text}}</span>
+                                <span ng-if="x.ChkCount" class="badge">{{x.ChkCount}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!--頁簽內容-->
+                    <div class="panel panel-default" ng-repeat="node in menus" ng-show="node == FMenu">
+                        <div class="panel-body">
+                            <ng-include src="'Item5'"></ng-include>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <!--功能表結構(編輯)-->
+        <script id="Item5" type="text/ng-template">
+            <ul>
+                <li ng-if="!node.Id">
+                    <span>{{node.Text}}</span>
+                    <ng-include src="'Item5'" ng-repeat="node in node.Nodes"></ng-include>
+                </li>
+                <li ng-if="node.Id" ng-class="node.Checked ? 'mitemcheck':''">
+                    <input type="checkbox" ng-model="node.Checked" ng-change="ctl.refreshChkCount(menus)" />
+                    <span>{{node.Text}}</span>
+                </li>
+            </ul>
+        </script>
+    </script>
+
+    <!--頁面索引-->
+    <script id="Pager" type="text/ng-template">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li ng-class="x.Active ? 'active' : (x.Enable ? '' : 'disabled' )" ng-repeat="x in ctl.Pager.Indexes"><a ng-click="ctl.pageMove(x.Index)">{{x.Name}}</a></li>
+            </ul>
+        </nav>
+    </script>
+    <!--當執行中-->
+    <div id="loading" class="loading" style="position:fixed;top:43%;left:43%;z-index:101;display:none">
+    </div>
+
+    <ng-include src="'@Url.Content("~/home/commonhtml")'"></ng-include>
+</div>
+

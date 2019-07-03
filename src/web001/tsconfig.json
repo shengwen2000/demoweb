@@ -1,0 +1,20 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "lib": [
+      "es7",
+      "dom"
+    ],
+    "noImplicitAny": false,
+    "noEmitOnError": false,
+    "removeComments": false,
+    "sourceMap": true,
+    "outDir": "./wwwroot",
+    "module": "amd",
+    "charset": "utf-8",
+    "alwaysStrict": true,
+    "target": "es5",
+    "experimentalDecorators": true
+  },
+  "exclude": [ "platforms", "node_modules", "bower_components", "plugins", "merges", "res", "bin", "bld", "obj" ]
+}

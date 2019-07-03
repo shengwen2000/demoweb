@@ -1,0 +1,136 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<WebApp.Services.AppInfoSetting> AppInfo
+@{
+    ViewBag.Title = "排程任務";
+}
+
+@section Scripts
+    {
+    <script src="~/lib/require.js"></script>
+    <script type="text/javascript">
+        require.config({
+            urlArgs: "v=@AppInfo.Value.Version"
+        });
+    </script>
+    <script type="text/javascript">
+        require(["../scripts/webapp.test/test001.js"], function (m) {
+            m.startApp('/', '/test001');
+        });
+    </script>
+}
+
+@section Styles
+    {
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+
+        blockquote {
+            font-size: inherit;
+        }
+
+        #table1 > tbody > tr {
+            cursor: pointer
+        }
+
+        @@media (max-width: 460px) {
+            .item_view {
+                width: 89vw
+            }
+        }
+    </style>
+}
+<div ng-cloak>
+
+    <!--主畫面#套用-->
+    <ng-include src="'MainCtrl'"></ng-include>
+
+    <!--主畫面 -->
+    <script id="MainCtrl" type="text/ng-template">
+        <!--MainCtrl-->
+        <div ng-controller="MainCtrl as ctl">
+
+            <div class="callout callout-info">
+                <h4>@ViewBag.Title</h4>
+                <p>
+                    通知系統
+                </p>
+            </div>
+            <button class="btn btn-default" ng-click="ctl.addNotify()">add new notify</button>
+
+            <ul class="list-group">
+                <li ng-repeat="x in ctl.Records" class="list-group-item">
+
+                    <ng-show ng-switch="x.State">
+                        <ng-show ng-switch-when="Append">
+                            <span>{{x.Title}}</span>
+                            <span>{{x.State}}</span>
+                            <button class="btn btn-danger" ng-click="ctl.cancelNotify(x)">Cancel</button>
+                        </ng-show>
+                        <ng-show ng-switch-when="Run">
+                            <span>{{x.Title}}</span>
+                            <span>{{x.State}}</span>
+                            <button class="btn btn-danger" ng-click="ctl.cancelNotify(x)">Cancel</button>
+                        </ng-show>
+                        <ng-show ng-switch-when="Finish">
+                            <ng-show ng-if="x.Result.Result == 'OK'">
+                                <ng-show ng-if="x.Result.Kind == 1">
+                                    <span>{{x.Title}}</span>
+                                    <a ng-href="{{x.Result.Content}}" target="_blank">下載</a>
+                                </ng-show>
+                            </ng-show>
+                            <ng-show ng-if="x.Result.Result != 'OK'">
+                                <span>{{x.Title}}</span>
+                                <span class="text-danger">{{x.Result.Message}}</span>
+                            </ng-show>
+                        </ng-show>
+                    </ng-show>
+
+                    <ng-show ng-if="x.Result">
+
+                    </ng-show>
+
+                </li>
+            </ul>
+
+
+            <!--對話盒容器-->
+            <ng-include ng-repeat="DialogCaller in [ctl.DialogCaller]" ng-if="DialogCaller" src="DialogCaller.Name"></ng-include>
+
+            <!--錯誤訊息-->
+            <div style="top:33%;position:fixed;left:25%;width:50%;z-index:10;" class="alert alert-danger" ng-show="ctl.Result != null && ctl.Result.Result != 'OK'">
+                {{ctl.Result.Message}}
+                <button type="button" class="close" ng-click="ctl.Result = null">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+
+    </script>
+    <!--頁面索引-->
+    <script id="Pager" type="text/ng-template">
+        <div class="row">
+            <div class="col-sm-2">
+                <label ng-if="ctl.Pager.Source.IsAll" style="color:royalblue">
+                    筆數:{{ctl.Pager.Source.Count + ctl.RecordsLogAttachCount}}
+                </label>
+                <label ng-if="!ctl.Pager.Source.IsAll" style="color:red">
+                    筆數:{{ctl.Pager.Source.Count + ctl.RecordsLogAttachCount}}以上
+                </label>
+            </div>
+            <div class="col-sm-8">
+                <nav>
+                    <ul class="pagination">
+                        <li ng-class="x.Active ? 'active' : (x.Enable ? '' : 'disabled' )" ng-repeat="x in ctl.Pager.Indexes"><a ng-click="ctl.pageMove(x.Index)">{{x.Name}}</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </script>
+
+    <!--當執行中-->
+    <div id="loading" class="loading" style="position:fixed;top:43%;left:43%;z-index:101;display:none">
+    </div>
+
+    <ng-include src="'@Url.Content("~/home/commonhtml")'"></ng-include>
+</div>
