@@ -105,21 +105,7 @@ namespace WebApp.Services
                 }
             }
             #endregion
-
-            //Create Role COPD if it does not exist
-            {
-                var roleName = "COPD";
-                var role = await _roleManager.FindByNameAsync(roleName);
-                if (role == null)
-                {
-                    //	醫護人員：可使用本專案中醫護人員所應可以使用的功能
-                    role = new AppRole();
-                    role.Name = roleName;
-                    role.Title = "醫護人員";
-                    role.Desc = "可使用COPD專案中醫護人員所應可以使用的功能";
-                    await _roleManager.CreateAsync(role);
-                }
-            }
+            
         }
     }
 }
