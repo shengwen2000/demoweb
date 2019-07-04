@@ -724,7 +724,8 @@ export class SwDownloadFile {
                     ngModel: '='
                 },
                 link: (scope) => {
-                    if (scope.ngModel) scope.ngModel = new Date(scope.ngModel);
+                    if (scope.ngModel)
+                        scope.ngModel = new Date(scope.ngModel);
                 }
             }
         })      
