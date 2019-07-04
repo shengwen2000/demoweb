@@ -11,7 +11,7 @@ define(["require", "exports"], function (require, exports) {
             this.Message = "";
         }
         MainCtrl.prototype.sayHello = function () {
-            this.Message = "Hello World";
+            this.Message = "HelloWorld";
         };
         return MainCtrl;
     }());
