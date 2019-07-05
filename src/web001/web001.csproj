@@ -49,6 +49,7 @@
     <None Remove="Scripts\webapp.demo\demo008.ts" />
     <None Remove="Scripts\webapp.demo\demo009.ts" />
     <None Remove="Scripts\webapp.demo\demo010.ts" />
+    <None Remove="Scripts\webapp.demo\helper.ts" />
     <None Remove="Scripts\webapp.sys\sys010.ts" />
   </ItemGroup>
 
@@ -219,6 +220,10 @@
     <None Include="wwwroot\lib\fastclick\fastclick.js" />
     <None Include="wwwroot\lib\jquery-slimscroll\jquery.slimscroll.js" />
     <None Include="wwwroot\lib\jquery-slimscroll\jquery.slimscroll.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\webapp.demo\helper.ts" />
   </ItemGroup>
 
   <ItemGroup>

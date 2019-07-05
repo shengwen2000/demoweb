@@ -2,13 +2,14 @@
 /**
 * Add List
 */
-class MainCtrl  {
+class Main2Ctrl  {
 
     Info = "";
 
-    Infos: string[] = [];
+    Infos: string[] = ["1", "2", "3"];
 
     constructor(public $scope: ng.IScope, public $q: ng.IQService) {
+
     }
 
     addInfo() {
@@ -17,6 +18,10 @@ class MainCtrl  {
             this.Infos.push(this.Info);
         }        
     }   
+
+    removeInfo(idx: number) {
+        this.Infos.splice(idx, 1);
+    }
 }
 
 /**
@@ -25,7 +30,7 @@ class MainCtrl  {
 export function startApp() {
     angular.module("app", []);
     angular.module("app")      
-        .controller('MainCtrl', MainCtrl)        
+        .controller('MainCtrl', Main2Ctrl)        
         ;
     angular.bootstrap(document, ['app']);
 };

@@ -4,19 +4,22 @@ define(["require", "exports"], function (require, exports) {
     /**
     * Add List
     */
-    var MainCtrl = /** @class */ (function () {
-        function MainCtrl($scope, $q) {
+    var Main2Ctrl = /** @class */ (function () {
+        function Main2Ctrl($scope, $q) {
             this.$scope = $scope;
             this.$q = $q;
             this.Info = "";
-            this.Infos = [];
+            this.Infos = ["1", "2", "3"];
         }
-        MainCtrl.prototype.addInfo = function () {
+        Main2Ctrl.prototype.addInfo = function () {
             if (this.Info) {
                 this.Infos.push(this.Info);
             }
         };
-        return MainCtrl;
+        Main2Ctrl.prototype.removeInfo = function (idx) {
+            this.Infos.splice(idx, 1);
+        };
+        return Main2Ctrl;
     }());
     /**
      * start angular app
@@ -24,7 +27,7 @@ define(["require", "exports"], function (require, exports) {
     function startApp() {
         angular.module("app", []);
         angular.module("app")
-            .controller('MainCtrl', MainCtrl);
+            .controller('MainCtrl', Main2Ctrl);
         angular.bootstrap(document, ['app']);
     }
     exports.startApp = startApp;

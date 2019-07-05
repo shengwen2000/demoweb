@@ -11,9 +11,11 @@
             urlArgs: "v=1.0.0"
         });
     </script>
-    <script type="text/javascript">requirejs(["../../scripts/webapp.demo/demo001.js"], function (m) {
+    <script type="text/javascript">
+        requirejs(["../../scripts/webapp.demo/demo001.js"], function (m) {
         m.startApp();
-    });</script>
+        });
+    </script>
 }
 
 <h2>@ViewBag.Title</h2>
@@ -21,5 +23,7 @@
     <p>{{ctl.Message}}</p>
 
     <button ng-click="ctl.sayHello()">click me</button>
+
+
 </div>
 

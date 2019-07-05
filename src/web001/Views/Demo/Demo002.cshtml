@@ -21,7 +21,13 @@
     <input type="text" ng-model="ctl.Info" />
     <button ng-click="ctl.addInfo()">Add</button>
     <ul>
-        <li ng-repeat="x in ctl.Infos">{{x}}</li>
+        <li ng-repeat="x in ctl.Infos track by $index">
+
+            {{x}} index = {{$index}}
+
+            <button ng-click="ctl.removeInfo($index)">Remove</button>
+
+        </li>
     </ul>
 </div>
 
