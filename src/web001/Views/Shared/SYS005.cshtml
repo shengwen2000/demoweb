@@ -43,7 +43,7 @@
 <div ng-cloak>
 
     <!--主畫面#套用-->
-    <ng-include src="'MainCtrl'"></ng-include>
+    <div ng-include src="'MainCtrl'"></div>
 
     <!--主畫面 -->
     <script id="MainCtrl" type="text/ng-template">
@@ -72,7 +72,7 @@
             <!--新增列表-->
             <ng-show ng-if="ctl.NewRecords[0]">
                 <h4>新增紀錄</h4>
-                <ng-include src="'Item'" ng-repeat="record in ctl.NewRecords"></ng-include>
+                <div ng-include src="'Item'" ng-repeat="record in ctl.NewRecords"></div>
             </ng-show>
 
             <ul class="nav nav-tabs" ng-if="ctl.Tabs[1]">
@@ -109,16 +109,16 @@
                             </div>
                         </div>-->
                     </div>
-                    <ng-include src="'List'"></ng-include>
+                    <div ng-include src="'List'"></div>
 
                     <!--頁面索引-->
-                    <ng-include src="'Pager'"></ng-include>
+                    <div ng-include src="'Pager'"></div>
                 </ng-show>
 
             </div>
 
             <!--對話盒容器-->
-            <ng-include ng-repeat="DialogCaller in [ctl.DialogCaller]" ng-if="DialogCaller" src="DialogCaller.Name"></ng-include>
+            <div ng-include ng-repeat="DialogCaller in [ctl.DialogCaller]" ng-if="DialogCaller" src="DialogCaller.Name"></div>
 
             <!--錯誤訊息-->
             <div style="top:33%;position:fixed;left:25%;width:50%;z-index:10;" class="alert alert-danger" ng-show="ctl.Result != null && ctl.Result.Result != 'OK'">
@@ -164,7 +164,7 @@
                         </tr>
                         <tr ng-repeat-end ng-if="x.$SubRecord" ng-repeat="record in [x.$SubRecord]">
                             <td colspan="5">
-                                <ng-include src="'Item'"></ng-include>
+                                <div ng-include src="'Item'"></div>
                             </td>
                         </tr>
                     </tbody>
@@ -271,5 +271,5 @@
     <div id="loading" class="loading" style="position:fixed;top:43%;left:43%;z-index:101;display:none">
     </div>
 
-    <ng-include src="'@Url.Content("~/home/commonhtml")'"></ng-include>
+    <div ng-include src="'@Url.Content("~/home/commonhtml")'"></div>
 </div>

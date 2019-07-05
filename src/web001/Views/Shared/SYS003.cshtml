@@ -38,7 +38,7 @@
 <div ng-cloak>
 
     <!--主畫面#套用-->
-    <ng-include src="'MainCtrl'"></ng-include>
+    <div ng-include src="'MainCtrl'"></div>
 
     <!--主畫面 -->
     <script id="MainCtrl" type="text/ng-template">
@@ -86,16 +86,14 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                    <!--頁面索引-->
-                    @*<ng-include src="'Pager'"></ng-include>*@
+                    </div>                   
                 </ng-show>
 
                 <!--項目內容-->
                 <ng-show ng-if="tab.Id.startsWith('Item')" ng-show="tab.IsFocus">
-                    <ng-include ng-repeat="record in [tab.Content]" src="'Item'"></ng-include>
-                    <ng-include ng-repeat="menus in [tab.Content.Menus]" src="'Item2'" ng-if="tab.Content.$State ==1 "></ng-include>
-                    <ng-include ng-repeat="menus in [tab.Content.Menus]" src="'Item4'" ng-if="tab.Content.$State > 1 "></ng-include>
+                    <div ng-include ng-repeat="record in [tab.Content]" src="'Item'"></div>
+                    <div ng-include ng-repeat="menus in [tab.Content.Menus]" src="'Item2'" ng-if="tab.Content.$State ==1 "></div>
+                    <div ng-include ng-repeat="menus in [tab.Content.Menus]" src="'Item4'" ng-if="tab.Content.$State > 1 "></div>
                 </ng-show>
 
                 <!--說明內容-->
@@ -109,7 +107,7 @@
             </div>
 
             <!--對話盒容器-->
-            <ng-include ng-repeat="DialogCaller in [ctl.DialogCaller]" ng-if="DialogCaller" src="DialogCaller.Name"></ng-include>
+            <div ng-include ng-repeat="DialogCaller in [ctl.DialogCaller]" ng-if="DialogCaller" src="DialogCaller.Name"></div>
 
             <!--錯誤訊息-->
             <div style="top:33%;position:fixed;left:25%;width:50%;z-index:10;" class="alert alert-danger" ng-show="ctl.Result != null && ctl.Result.Result != 'OK'">
@@ -197,7 +195,7 @@
                     <!--頁簽內容-->
                     <div class="panel panel-default" ng-repeat="node in menus" ng-show="node == FMenu">
                         <div class="panel-body">
-                            <ng-include src="'Item3'"></ng-include>
+                            <div ng-include src="'Item3'"></div>
                         </div>
                     </div>
                 </div>
@@ -209,7 +207,7 @@
             <ul>
                 <li ng-if="node.ChkCount">
                     <span>{{node.Text}}</span>
-                    <ng-include src="'Item3'" ng-repeat="node in node.Nodes"></ng-include>
+                    <div ng-include src="'Item3'" ng-repeat="node in node.Nodes"></div>
                 </li>
             </ul>
         </script>
@@ -231,7 +229,7 @@
                     <!--頁簽內容-->
                     <div class="panel panel-default" ng-repeat="node in menus" ng-show="node == FMenu">
                         <div class="panel-body">
-                            <ng-include src="'Item5'"></ng-include>
+                            <div ng-include src="'Item5'"></div>
                         </div>
                     </div>
                 </div>
@@ -243,7 +241,7 @@
             <ul>
                 <li ng-if="!node.Id">
                     <span>{{node.Text}}</span>
-                    <ng-include src="'Item5'" ng-repeat="node in node.Nodes"></ng-include>
+                    <div ng-include src="'Item5'" ng-repeat="node in node.Nodes"></div>
                 </li>
                 <li ng-if="node.Id" ng-class="node.Checked ? 'mitemcheck':''">
                     <input type="checkbox" ng-model="node.Checked" ng-change="ctl.refreshChkCount(menus)" />
@@ -265,6 +263,6 @@
     <div id="loading" class="loading" style="position:fixed;top:43%;left:43%;z-index:101;display:none">
     </div>
 
-    <ng-include src="'@Url.Content("~/home/commonhtml")'"></ng-include>
+    <div ng-include src="'@Url.Content("~/home/commonhtml")'"></div>
 </div>
 

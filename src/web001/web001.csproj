@@ -6,7 +6,7 @@
     <OutputType>Exe</OutputType>
     <PackageId>Web001</PackageId>
     <UserSecretsId>aspnet-WebApp-fcebb46e-1cdc-4085-922b-9785b5948133</UserSecretsId>
-    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <RootNamespace>WebApp</RootNamespace>
   </PropertyGroup>
 
@@ -240,5 +240,20 @@
     <Error Condition="'$(ErrorCode)' != '0'" Text="typescipt compile error $(ErrorCode)" />
     <Message Condition="'$(ErrorCode)' == '0'" Importance="high" Text="type script compile success" />
   </Target>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind />
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
 
 </Project>

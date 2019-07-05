@@ -213,7 +213,7 @@
 
                     <div id="Sys010TCtrl" ng-controller="Sys010TCtrl as ctl" ng-cloak>
                         <!--對話盒容器-->
-                        <ng-include ng-repeat="DialogCaller in [ctl.DialogCaller]" src="DialogCaller.Name"></ng-include>
+                        <div ng-include ng-repeat="DialogCaller in [ctl.DialogCaller]" src="DialogCaller.Name"></div>
                         <!--當執行中-->
                         <div id="loading" class="loading" style="position:fixed;top:43%;left:43%;z-index:101;display:none">
                         </div>
@@ -225,7 +225,7 @@
                             </button>
                         </div>
 
-                        <ng-include src="'@Url.Content("~/home/commonhtml")'"></ng-include>
+                        <div ng-include src="'@Url.Content("~/home/commonhtml")'"></div>
                     </div>
                 </div>
 

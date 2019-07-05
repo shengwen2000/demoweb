@@ -43,7 +43,7 @@
 <div ng-cloak>
 
     <!--主畫面#套用-->
-    <ng-include src="'MainCtrl'"></ng-include>
+    <div ng-include src="'MainCtrl'"></div>
 
     <!--主畫面 -->
     <script id="MainCtrl" type="text/ng-template">
@@ -95,7 +95,7 @@
 
 
             <!--對話盒容器-->
-            <ng-include ng-repeat="DialogCaller in [ctl.DialogCaller]" ng-if="DialogCaller" src="DialogCaller.Name"></ng-include>
+            <div ng-include ng-repeat="DialogCaller in [ctl.DialogCaller]" ng-if="DialogCaller" src="DialogCaller.Name"></div>
 
             <!--錯誤訊息-->
             <div style="top:33%;position:fixed;left:25%;width:50%;z-index:10;" class="alert alert-danger" ng-show="ctl.Result != null && ctl.Result.Result != 'OK'">
@@ -132,5 +132,5 @@
     <div id="loading" class="loading" style="position:fixed;top:43%;left:43%;z-index:101;display:none">
     </div>
 
-    <ng-include src="'@Url.Content("~/home/commonhtml")'"></ng-include>
+    <div ng-include src="'@Url.Content("~/home/commonhtml")'"></div>
 </div>

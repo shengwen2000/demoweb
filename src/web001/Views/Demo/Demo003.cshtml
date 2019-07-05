@@ -4,7 +4,7 @@
 }
 
 @section Scripts
-{
+    {
     <script src="~/lib/require.js"></script>
     <script type="text/javascript">
         requirejs.config({
@@ -13,7 +13,7 @@
     </script>
     <script type="text/javascript">
         requirejs(["../../scripts/webapp.demo/demo003.js"], function (m) {
-        m.startApp();
+            m.startApp();
         });
     </script>
 }
@@ -26,25 +26,84 @@
     <li role="presentation"><a href="#">Messages</a></li>
 </ul>
 
-<hr/>
+<hr />
+<div class="panel panel-default">
+    <div class="panel-heading">example1</div>
+    <div class="panel-body">
+        <div ng-controller="MainCtrl as ctl">
 
-<div ng-controller="MainCtrl as ctl">
+            <ul class="nav nav-tabs">
+                <li ng-repeat="x in ctl.Tabs" ng-class="x.Active ? 'active':''"><a href="#" ng-click="ctl.tabClick(x)">{{x.Title}}</a></li>
+            </ul>
 
-    <ul class="nav nav-tabs">
-        <li ng-repeat="x in ctl.Tabs" ng-class="x.Active ? 'active':''" ><a href="#" ng-click="ctl.tabClick(x)">{{x.Title}}</a></li>      
-    </ul>
+            <hr />
 
-    <hr/>
+            <div class="form-group">
+                <label class="control-label" for="form-group-input">New Tab</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="new tab title" ng-model="title">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="ctl.tabAdd(title)">Add</button>
+                    </span>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="control-label" for="form-group-input">New Tab</label>
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="new tab title" ng-model="title">            
-            <span class="input-group-btn">
-                <button class="btn btn-default" ng-click="ctl.tabAdd(title)">Add</button>
-            </span>
         </div>
-    </div> 
-
+    </div>
 </div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">example2</div>
+    <div class="panel-body">
+
+        
+
+        <div ng-controller="MainCtrl2 as ctl">
+
+            <div class="form-group">
+                <label class="control-label" for="form-group-input">New Tab</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="new tab title" ng-model="title">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="#" ng-click="ctl.tabAdd(title, 'item')">Add Item Tab</a></li>
+                            <li><a href="#" ng-click="ctl.tabAdd(title, 'list')">Add List Tab</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            @*tab title*@
+            <ul class="nav nav-tabs">
+                <li ng-repeat="x in ctl.Tabs" ng-class="x.Active ? 'active':''"><a href="#" ng-click="ctl.tabClick(x)">{{x.Title}}</a></li>
+            </ul>
+
+                      
+            <div ng-repeat-start="x in ctl.Tabs" ng-if=" x.Kind == 'item'" ng-show="x.Active">
+                @*tab-item*@              
+                <span ng-repeat="y in [x.Content]">
+                    Id={{y.Id}},No={{y.No}}, Name={{y.Name}}
+                </span>                          
+            </div>
+
+            <div ng-repeat-end ng-if=" x.Kind == 'list'" ng-show="x.Active">
+                @*tab-list*@
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="y in x.Content">
+                        Id={{y.Id}},No={{y.No}}, Name={{y.Name}}
+                    </li>
+                </ul>                
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 
