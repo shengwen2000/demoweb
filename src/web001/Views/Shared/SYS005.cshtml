@@ -70,10 +70,10 @@
             </div>
 
             <!--新增列表-->
-            <ng-show ng-if="ctl.NewRecords[0]">
+            <div ng-if="ctl.NewRecords[0]">
                 <h4>新增紀錄</h4>
                 <div ng-include src="'Item'" ng-repeat="record in ctl.NewRecords"></div>
-            </ng-show>
+            </div>
 
             <ul class="nav nav-tabs" ng-if="ctl.Tabs[1]">
                 <li ng-repeat="x in ctl.Tabs" ng-class="x.IsFocus ? 'active' : ''">
@@ -84,7 +84,7 @@
             <!--頁簽內容-->
             <div ng-repeat="tab in ctl.Tabs">
                 <!--First Tab-->
-                <ng-show ng-if="$index == 0" ng-show="tab.IsFocus">
+                <div ng-if="$index == 0" ng-show="tab.IsFocus">
                     <!--資料列表-->
                     <h4>資料列表<button type="button" class="btn btn-link" ng-click="ctl.pageQuery();"><span class="glyphicon glyphicon-search"></span>查詢</button></h4>
 
@@ -113,7 +113,7 @@
 
                     <!--頁面索引-->
                     <div ng-include src="'Pager'"></div>
-                </ng-show>
+                </div>
 
             </div>
 

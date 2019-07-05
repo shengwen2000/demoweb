@@ -40,11 +40,11 @@
         <!--MainCtrl-->
         <div ng-controller="MainCtrl as ctl">
             @*<div class="jumbotron">
-                    <h2>日誌檔</h2>
-                    <p>
-                        系統日誌檔，可檢視系統後台重要的執行紀錄。
-                    </p>
-                </div>*@
+            <h2>日誌檔</h2>
+            <p>
+                系統日誌檔，可檢視系統後台重要的執行紀錄。
+            </p>
+        </div>*@
             <div class="callout callout-info">
                 <h4>日誌檔</h4>
                 <p>
@@ -58,41 +58,40 @@
                 </li>
             </ul>
 
-            <div ng-repeat="tab in ctl.Tabs">
-                <!--First Tab-->
-                <ng-show ng-if="$index == 0" ng-show="tab.IsFocus">
-                    <!--查詢條件-->
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group" ng-class="ctl.QryArgs.Date1.Checked?'has-success':''">
-                                <div class="input-group">
-                                    <div class="input-group-addon">日期(起)</div>
-                                    <input type="date" class="form-control" ng-model="ctl.QryArgs.Date1.Value" placeholder="" ng-change="ctl.QryArgs.Date1.Checked = ctl.QryArgs.Date1.Value ? true:false">
-                                    <div class="input-group-addon"><input type="checkbox" ng-model="ctl.QryArgs.Date1.Checked" /></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group" ng-class="ctl.QryArgs.Name.Checked?'has-success':''">
-                                <div class="input-group">
-                                    <div class="input-group-addon">檔名</div>
-                                    <input type="text" name="Name" class="form-control" ng-model="ctl.QryArgs.Name.Value" placeholder="" ng-change="ctl.QryArgs.Name.Checked = ctl.QryArgs.Name.Value ? true:false">
-                                    <div class="input-group-addon"><input type="checkbox" ng-model="ctl.QryArgs.Name.Checked" /></div>
-                                </div>
+            <!--First Tab-->
+            <div ng-repeat-start="tab in ctl.Tabs" ng-if="$index == 0" ng-show="tab.IsFocus">
+
+                <!--查詢條件-->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" ng-class="ctl.QryArgs.Date1.Checked?'has-success':''">
+                            <div class="input-group">
+                                <div class="input-group-addon">日期(起)</div>
+                                <input type="date" class="form-control" ng-model="ctl.QryArgs.Date1.Value" placeholder="" ng-change="ctl.QryArgs.Date1.Checked = ctl.QryArgs.Date1.Value ? true:false">
+                                <div class="input-group-addon"><input type="checkbox" ng-model="ctl.QryArgs.Date1.Checked" /></div>
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-link" ng-click="ctl.pageQuery();"><span class="glyphicon glyphicon-search"></span>查詢</button>
-                    <!--套用列表-->
-                    <div ng-include src="'List'"></div>
-                    <!--套用頁面索引-->
-                    <div ng-include src="'Pager'"></div>
-                </ng-show>
+                    <div class="col-sm-6">
+                        <div class="form-group" ng-class="ctl.QryArgs.Name.Checked?'has-success':''">
+                            <div class="input-group">
+                                <div class="input-group-addon">檔名</div>
+                                <input type="text" name="Name" class="form-control" ng-model="ctl.QryArgs.Name.Value" placeholder="" ng-change="ctl.QryArgs.Name.Checked = ctl.QryArgs.Name.Value ? true:false">
+                                <div class="input-group-addon"><input type="checkbox" ng-model="ctl.QryArgs.Name.Checked" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-link" ng-click="ctl.pageQuery();"><span class="glyphicon glyphicon-search"></span>查詢</button>
+                <!--套用列表-->
+                <div ng-include src="'List'"></div>
+                <!--套用頁面索引-->
+                <div ng-include src="'Pager'"></div>
+            </div>
 
-                <!--項目內容-->
-                <ng-show ng-if="tab.Id.startsWith('Item')" ng-show="tab.IsFocus">
-                    <div ng-include ng-repeat="record in [tab.Content]" src="'Item'"></div>
-                </ng-show>
+            <!--項目內容-->
+            <div ng-repeat-end ng-if="tab.Id.startsWith('Item')" ng-show="tab.IsFocus">
+                <div ng-include ng-repeat="record in [tab.Content]" src="'Item'"></div>
             </div>
 
             <!--對話盒容器-->

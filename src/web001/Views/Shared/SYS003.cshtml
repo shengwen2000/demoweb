@@ -65,7 +65,7 @@
             <!--頁簽內容-->
             <div ng-repeat="tab in ctl.Tabs">
                 <!--List Tab-->
-                <ng-show ng-if="$index == 0" ng-show="tab.IsFocus">
+                <div ng-if="$index == 0" ng-show="tab.IsFocus">
                     <!--資料列表-->
                     <button type="button" class="btn btn-link" ng-click="ctl.query();"><span class="glyphicon glyphicon-refresh"></span>重新整理</button>
                     <div class="table-responsive">
@@ -87,14 +87,14 @@
                             </tbody>
                         </table>
                     </div>                   
-                </ng-show>
+                </div>
 
                 <!--項目內容-->
-                <ng-show ng-if="tab.Id.startsWith('Item')" ng-show="tab.IsFocus">
+                <div ng-if="tab.Id.startsWith('Item')" ng-show="tab.IsFocus">
                     <div ng-include ng-repeat="record in [tab.Content]" src="'Item'"></div>
                     <div ng-include ng-repeat="menus in [tab.Content.Menus]" src="'Item2'" ng-if="tab.Content.$State ==1 "></div>
                     <div ng-include ng-repeat="menus in [tab.Content.Menus]" src="'Item4'" ng-if="tab.Content.$State > 1 "></div>
-                </ng-show>
+                </div>
 
                 <!--說明內容-->
                 <div ng-if="tab.Id.startsWith('Help')" ng-show="tab.IsFocus">

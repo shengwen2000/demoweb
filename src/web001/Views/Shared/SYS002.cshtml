@@ -60,7 +60,7 @@
             </ul>
             <div ng-repeat="tab in ctl.Tabs">
                 <!--First Tab-->
-                <ng-show ng-if="$index == 0" ng-show="tab.IsFocus">
+                <div ng-if="$index == 0" ng-show="tab.IsFocus">
                     <!--資料列表-->
                     <div class="form-group form-inline">
                         <label class="sr-only">查詢</label>
@@ -106,7 +106,7 @@
 
                     <!--頁面索引-->
                     <div ng-include src="'Pager'"></div>
-                </ng-show>
+                </div>
             </div>
 
             <!--對話盒容器-->
