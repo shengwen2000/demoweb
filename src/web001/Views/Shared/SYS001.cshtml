@@ -90,8 +90,8 @@
             </div>
 
             <!--項目內容-->
-            <div ng-repeat-end ng-if="tab.Id.startsWith('Item')" ng-show="tab.IsFocus">
-                <div ng-include ng-repeat="record in [tab.Content]" src="'Item'"></div>
+            <div ng-repeat-end ng-if="tab.Id.startsWith('Item')" ng-show="tab.IsFocus" ng-include ng-repeat="record in [tab.Content]" src="'Item'">
+               
             </div>
 
             <!--對話盒容器-->

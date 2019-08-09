@@ -1,0 +1,14 @@
+﻿@model HelloViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<form method="post">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" />
+    <button type="submit" >Submit</button>
+</form>
+
+<p>@Model.Note</p>
