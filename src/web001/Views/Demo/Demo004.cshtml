@@ -20,6 +20,42 @@
 
 <h2>@ViewBag.Title</h2>
 <div ng-controller="MainCtrl as ctl">
-    
+    <button class="btn btn-primary" ng-click="ctl.add()"><spn class="glyphicon glyphicon-plus"></spn></button>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>編號</th>
+                <th>姓名</th>
+                <th></th>
+            </tr>
+        </thead>      
+        <tr ng-repeat-start="x in ctl.Records" ng-show="!x.$EditRow">
+            <td>{{x.Id}}</td>
+            <td>{{x.No}}</td>
+            <td>{{x.Name}}</td>
+            <td><button class="btn btn-default" ng-click="ctl.edit(x)">Edit</button>&nbsp;&nbsp;<button class="btn btn-danger" ng-click="ctl.remove(x)">Remove</button></td>
+            
+        </tr>
+
+        <tr ng-repeat-end ng-if="x.$EditRow">
+            <td>{{x.Id}}</td>
+            <td>
+                <div class="form-group">   
+                    <input type="text" class="form-control" ng-model="x.$EditRow.No" placeholder="input no">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" class="form-control"  ng-model="x.$EditRow.Name"  placeholder="input name">
+                </div>
+            </td>
+            <td>
+                <button class="btn btn-default" ng-click="ctl.save(x)">Save</button>
+                <button class="btn btn-default" ng-click="ctl.cancel(x)">Cancel</button>
+            </td>
+        </tr>
+
+    </table>
 </div>
 
