@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{921782D3-589
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "web001", "src\web001\web001.csproj", "{2A222745-DC7B-4163-8DF6-6F15EA1A20CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "web005", "web005\web005.csproj", "{DA4C495F-BCEB-4E24-828E-07CEF6546720}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,12 +21,17 @@ Global
 		{2A222745-DC7B-4163-8DF6-6F15EA1A20CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A222745-DC7B-4163-8DF6-6F15EA1A20CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A222745-DC7B-4163-8DF6-6F15EA1A20CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA4C495F-BCEB-4E24-828E-07CEF6546720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA4C495F-BCEB-4E24-828E-07CEF6546720}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA4C495F-BCEB-4E24-828E-07CEF6546720}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA4C495F-BCEB-4E24-828E-07CEF6546720}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2A222745-DC7B-4163-8DF6-6F15EA1A20CA} = {921782D3-5893-42D5-B9F0-C9230BF02D3D}
+		{DA4C495F-BCEB-4E24-828E-07CEF6546720} = {921782D3-5893-42D5-B9F0-C9230BF02D3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F8A7F876-E046-4390-8D41-BE147EB7C5A1}
