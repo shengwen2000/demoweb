@@ -21,7 +21,9 @@ namespace EfCore.Test.Data
     {
         public AppDbContext CreateDbContext(string[] args)
         {
-            return new AppDbContext();
+            var builder = new DbContextOptionsBuilder<AppDbContext>();
+            builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=efcoretest;Trusted_Connection=True;MultipleActiveResultSets=true");
+            return new AppDbContext(builder.Options);
         }
     }
 }

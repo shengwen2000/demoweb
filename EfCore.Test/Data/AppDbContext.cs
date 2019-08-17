@@ -10,15 +10,10 @@ namespace EfCore.Test.Data
     /// </summary>
     public class AppDbContext : DbContext
     {
-        public AppDbContext()
-        {   
-        }
-      
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=efcoretest;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
-
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

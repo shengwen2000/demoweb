@@ -15,7 +15,7 @@ namespace EfCore.Test
             ClearAll();
 
             //insert new
-            using (var ctx = new AppDbContext())
+            using (var ctx = CreateDbContext())
             {
                 var o1 = new DmOrder();
                 o1.No = "123456789";
@@ -31,7 +31,7 @@ namespace EfCore.Test
             }
 
             //update
-            using (var ctx = new AppDbContext())
+            using (var ctx = CreateDbContext())
             {
                 var o1 = ctx.Set<DmOrder>().FirstOrDefault(x => x.No == "123456789");
                 o1.ToAddress = "tainai";
@@ -42,7 +42,7 @@ namespace EfCore.Test
             }
 
             //remove
-            using (var ctx = new AppDbContext())
+            using (var ctx = CreateDbContext())
             {
                 var o1 = ctx.Set<DmOrder>().FirstOrDefault(x => x.No == "123456789");
                 ctx.Remove(o1);
@@ -59,7 +59,7 @@ namespace EfCore.Test
         {
             ClearAll();
            
-            using (var ctx = new AppDbContext())
+            using (var ctx = CreateDbContext())
             {
                 Assert.ThrowsException<DbUpdateException>(() => {
                     var o1 = new DmOrder();
@@ -85,10 +85,16 @@ namespace EfCore.Test
         }
 
 
+        public AppDbContext CreateDbContext()
+        {
+            var builder = new DbContextOptionsBuilder<AppDbContext>();
+            builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=efcoretest;Trusted_Connection=True;MultipleActiveResultSets=true");
+            return new AppDbContext(builder.Options);
+        }
 
         void ClearAll()
         {
-            using (var ctx = new AppDbContext())
+            using (var ctx = CreateDbContext())
             {
                 foreach (var x in ctx.Set<DmOrder>())
                     ctx.Remove(x);
