@@ -63,6 +63,13 @@ namespace WebApp.Data
 
             builder.Entity<SkOrdItem>();
 
+        
+            builder.Entity<DmStudent>().HasIndex(x => x.No).IsUnique();
+            builder.Entity<DmStudent>().HasMany(x => x.Courses).WithOne(x => x.Student);
+
+            builder.Entity<DmCourse>().HasMany(x => x.Students).WithOne(x => x.Course);
+
+            builder.Entity<DmStuCour>().HasKey(x => new { x.StudentId, x.CourseId});
         }
 
     }

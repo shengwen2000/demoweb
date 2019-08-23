@@ -20,6 +20,7 @@ namespace WebApp.Data
         /// <summary>
         /// Order Number (unique)
         /// </summary>
+        [MaxLength(20)]
         public string No { get; set; }
 
         /// <summary>
