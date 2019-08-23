@@ -255,6 +255,15 @@ namespace System.Linq
             {
                 return new Expr<T>();
             }
+
+            /// <summary>
+            /// 建立新的陳述式
+            /// </summary>
+            /// <returns></returns>
+            public Expr<T> NewExpr(Expression<Func<T, bool>> predicate)
+            {
+                return new Expr<T>(predicate);
+            }
         }
 
         /// <summary>
@@ -268,11 +277,20 @@ namespace System.Linq
             /// </summary>
             public ExprNode<T> Body { get; set; }
 
+            public Expr()
+            {                
+            }
+
+            public Expr(Expression<Func<T, bool>> predicate)
+            {
+                Body = new ExprNode<T> { Kind = 1, Value = predicate };
+            }
+
             /// <summary>
             /// 增加Or條件
             /// </summary>
             /// <param name="predicate"></param>
-            public void Or(Expression<Func<T, bool>> predicate)
+            public Expr<T> Or(Expression<Func<T, bool>> predicate)
             {
                 if (Body == null)
                 {
@@ -283,13 +301,14 @@ namespace System.Linq
                     var node = new ExprNode<T> { Kind = 1, Value = predicate };
                     Body = new ExprNode<T> { Kind = 2, Left = Body, Right = node };
                 }
+                return this;
             }
 
             /// <summary>
             /// 增加Or條件
             /// </summary>
             /// <param name="expr"></param>
-            public void Or(Expr<T> expr)
+            public Expr<T> Or(Expr<T> expr)
             {
                 if (Body == null)
                 {
@@ -299,13 +318,14 @@ namespace System.Linq
                 {
                     Body = new ExprNode<T> { Kind = 2, Left = Body, Right = expr.Body };
                 }
+                return this;
             }
 
             /// <summary>
             /// 增加And條件
             /// </summary>
             /// <param name="predicate"></param>
-            public void And(Expression<Func<T, bool>> predicate)
+            public Expr<T> And(Expression<Func<T, bool>> predicate)
             {
                 if (Body == null)
                 {
@@ -316,13 +336,14 @@ namespace System.Linq
                     var node = new ExprNode<T> { Kind = 1, Value = predicate };
                     Body = new ExprNode<T> { Kind = 3, Left = Body, Right = node };
                 }
+                return this;
             }
 
             /// <summary>
             /// 增加And條件
             /// </summary>
             /// <param name="expr"></param>
-            public void And(Expr<T> expr)
+            public Expr<T> And(Expr<T> expr)
             {
                 if (Body == null)
                 {
@@ -332,6 +353,7 @@ namespace System.Linq
                 {
                     Body = new ExprNode<T> { Kind = 3, Left = Body, Right = expr.Body };
                 }
+                return this;
             }
         }
 
