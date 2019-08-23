@@ -36,6 +36,7 @@ namespace WebApp.Data
             builder.Entity<SysIdEncode>();
 
             builder.Entity<ApplicationUser>().HasMany(x => x.Roles).WithOne(x => x.User).HasForeignKey(x => x.UserId);
+            builder.Entity<ApplicationUser>().HasOne(x => x.SkMember).WithOne(x => x.AppUser).OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<AppRole>().HasMany(x => x.Users).WithOne(x => x.Role).HasForeignKey(x => x.RoleId);          
 
@@ -49,6 +50,18 @@ namespace WebApp.Data
             builder.AddSchedulerServiceModel();
 
             builder.AddQueueTaskServiceModel<DefaultQueueContext>("Default");
+
+            builder.Entity<SkMember>().HasIndex(x => x.No).IsUnique();
+            builder.Entity<SkMember>().HasOne(x => x.Parent).WithMany(x => x.Childs).HasForeignKey(x => x.ParentId).OnDelete(DeleteBehavior.Restrict);
+           
+            builder.Entity<SkProduct>().HasIndex(x => x.Code).IsUnique();
+
+            builder.Entity<SkOrder>().HasMany(x => x.Items).WithOne(x => x.Order).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<SkOrder>().HasOne(x => x.Member).WithMany(x => x.Orders).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<SkOrder>().Property(x => x.RowVersion).IsRowVersion();
+            builder.Entity<SkOrder>().HasIndex(x => x.No).IsUnique();
+
+            builder.Entity<SkOrdItem>();
 
         }
 

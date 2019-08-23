@@ -34,5 +34,15 @@ namespace WebApp.Data
         /// 所隸屬的群組
         /// </summary>
         public List<AppRoleUser> Roles { get; set; }
+
+        /// <summary>
+        /// 此帳號連結的會員
+        /// </summary>
+        public int? SkMemberId { get; set; }
+
+        /// <summary>
+        /// 此帳號連結的會員
+        /// </summary>
+        public SkMember SkMember { get; set; }
     }
 }

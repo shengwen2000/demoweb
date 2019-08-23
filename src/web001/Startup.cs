@@ -228,23 +228,20 @@ namespace WebApp
             }
 
             //make sure database Migrate ready
-            if (Configuration["DesignTime"] == "0")
-            {
-                using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
+            {
+                try
                 {
-                    try
-                    {
-                        var ctx = scope.ServiceProvider.GetService<ApplicationDbContext>();
-                        ctx.Database.Migrate();
+                    var ctx = scope.ServiceProvider.GetService<ApplicationDbContext>();
+                    ctx.Database.Migrate();
 
-                        var dbu = scope.ServiceProvider.GetService<DatabaseUpgrade>();
-                        dbu.Upgrade().GetAwaiter().GetResult();
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogCritical($"Database Migrate Exception = {ex}");
-                    }
+                    var dbu = scope.ServiceProvider.GetService<DatabaseUpgrade>();
+                    dbu.Upgrade().GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogCritical($"Database Migrate Exception = {ex}");
                 }
             }
 
@@ -297,8 +294,7 @@ namespace WebApp
                     template: "{controller=Home}/{action=Index}/{id?}");
             });            
 
-            //auto start service
-            if (Configuration["DesignTime"] == "0")
+            //auto start service           
             {
                 using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())

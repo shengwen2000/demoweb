@@ -24,28 +24,29 @@ namespace WebApp
                   //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                   .AddEnvironmentVariables()
                   )
-              .UseSetting("DesignTime", "0")
-              .UseStartup<Startup>();
+              //.UseSetting("DesignTime", "0")
+              .UseStartup<Startup>()
+            ;
 
-        /// <summary>
-        /// Only for Ef tools
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public static IWebHost BuildWebHost(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration(builder => builder.SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                    .AddJsonFile("appsettings.server.json", optional: true, reloadOnChange: true)
-                    //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                    .AddEnvironmentVariables()
-                    )
-                .ConfigureLogging((ctx, logging) => { }) // No logging
-                .UseSetting("DesignTime", "1")
-                .UseStartup<Startup>()
-                .Build()
-                ;
-        }
+        ///// <summary>
+        ///// Only for Ef tools
+        ///// </summary>
+        ///// <param name="args"></param>
+        ///// <returns></returns>
+        //public static IWebHost BuildWebHost(string[] args)
+        //{
+        //    return WebHost.CreateDefaultBuilder(args)
+        //        .ConfigureAppConfiguration(builder => builder.SetBasePath(Directory.GetCurrentDirectory())
+        //            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        //            .AddJsonFile("appsettings.server.json", optional: true, reloadOnChange: true)
+        //            //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+        //            .AddEnvironmentVariables()
+        //            )
+        //        .ConfigureLogging((ctx, logging) => { }) // No logging
+        //        .UseSetting("DesignTime", "1")
+        //        .UseStartup<Startup>()
+        //        .Build()
+        //        ;
+        //}
     }
 }
