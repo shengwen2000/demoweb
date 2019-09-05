@@ -27,7 +27,7 @@ namespace WebApp.Data
         /// <summary>
         /// 一階下線會員
         /// </summary>
-        public ICollection<SkMember> Childs { get; set; }
+        public List<SkMember> Childs { get; set; }
 
         /// <summary>
         /// 加入日
