@@ -60,10 +60,10 @@ namespace WebApp.Data
             builder.Entity<SkOrder>().HasOne(x => x.Member).WithMany(x => x.Orders).OnDelete(DeleteBehavior.Restrict);
             builder.Entity<SkOrder>().Property(x => x.RowVersion).IsRowVersion();
             builder.Entity<SkOrder>().HasIndex(x => x.No).IsUnique();
+    
+            //builder.Entity<SkOrdItem>().HasOne(x => x.Order).WithMany().HasForeignKey(x => x.OrderId)
 
-            builder.Entity<SkOrdItem>();
 
-        
             builder.Entity<DmStudent>().HasIndex(x => x.No).IsUnique();
             builder.Entity<DmStudent>().HasMany(x => x.Courses).WithOne(x => x.Student);
 
