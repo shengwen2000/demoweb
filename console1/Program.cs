@@ -15,17 +15,22 @@ namespace WebApp
         static async Task Main(string[] args)
         {
             var host = new HostBuilder()
+              
              //.UseContentRoot("C:\\001")
              .ConfigureAppConfiguration((ctx, builder) =>
              {
                  //自動產生設定檔                                 
                  builder.AddJsonFile("appsettings.json", false);
                  builder.AddJsonFile($"appsettings.{ctx.HostingEnvironment.EnvironmentName}.json", true);
+
+                
              })
+             //使用與Asp.net core 相同的 scope規定
+            .UseServiceProviderFactory(new DefaultServiceProviderFactory(new ServiceProviderOptions() { ValidateScopes = true }))
+
             .ConfigureServices((ctx, services) =>
             {
                 services.Configure<FdServerConfig>(ctx.Configuration.GetSection("FtpDeploy"));
-
                 //services.Configure<FdServerConfig>(x => x.IsDisableUpload = true);
 
                 services.AddTransient<FdCleanJob>();     
@@ -38,6 +43,7 @@ namespace WebApp
 
                 services.Configure<ConsoleLifetimeOptions>(x => { x.SuppressStatusMessages = true; });
             })
+            
             .Build()
             ;
 
@@ -46,68 +52,53 @@ namespace WebApp
             {
                 await host.StartAsync();
 
-                var app = host.Services.GetService<FdConsole>();
-                var app2 = host.Services.GetService<FdConsole>();
+                var srvprovider = host.Services.GetService<IServiceProvider>();
+
+                //singleton
+                var app = srvprovider.GetService<FdConsole>();
+                var app2 = srvprovider.GetService<FdConsole>();
                 var thesame = app == app2;
 
-                //await Task.Run(() => Test02(host.Services));
-
-                //new Thread(() => Test02(host.Services)).Start();
-
+                //test scope
                 {
-                    var srvprovider = host.Services;
+                    try
+                    {
+                        var a = srvprovider.GetService<FdNewJob>();
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }                    
 
-                    var a = srvprovider.GetService<FdNewJob>();
-                    var b = srvprovider.GetService<FdNewJob>();
-                    var ok = a == b;
-
-
+                    //必須創建Scope才能取得資料
                     var scopef = srvprovider.GetRequiredService<IServiceScopeFactory>();
-                    using (scopef.CreateScope())
+                    using (var scope = scopef.CreateScope())
                     {
-                        var c = srvprovider.GetService<FdNewJob>();
-                        var ok2 = a == c;
+                        var c = scope.ServiceProvider.GetService<FdNewJob>();                      
+
+                        using (var scope2 = scopef.CreateScope())
+                        {
+                            var d = scope2.ServiceProvider.GetService<FdNewJob>();
+                            var ok3 = c == d; //false
+                        }
                     }
-
-                    using (scopef.CreateScope())
-                    {
-                        var c = srvprovider.GetService<FdNewJob>();
-                        var ok2 = a == c;
-                    }
-
-
-
-
                 }
 
                 {
                     var srv = host.Services.GetRequiredService<TimeService>();
-
                 }
 
-
-                //var config = host.Services.GetService<IOptions<FdServerConfig>>();
+                {
+                    var a1 = srvprovider.GetService<IServiceScopeFactory>();
+                    var a2 = a1.CreateScope().ServiceProvider;                   
+                }
 
                 await app.StartAsync();
-
-
 
                 Console.ReadKey();
 
                 await host.StopAsync();
-            }
-
-           
+            }           
         }
-
-
-        static  void Test02(IServiceProvider srvprovider)
-        {
-            var a = srvprovider.GetService<FdNewJob>();
-            var b = srvprovider.GetService<FdNewJob>();
-            var ok = a == b;
-        }
-
-
     }
 }

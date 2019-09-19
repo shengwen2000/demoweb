@@ -227,6 +227,10 @@ namespace WebApp
                 applicationLifetime.ApplicationStarted.Register(() => this.Started(app.ApplicationServices));
             }
 
+            {
+                var a = app.ApplicationServices.GetService<ApplicationDbContext>();
+            }
+
             //make sure database Migrate ready
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
