@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using WebApp.Data;
@@ -245,6 +246,50 @@ namespace web001.test
                     
                 }
             }
+        }
+
+        public string Name { get; set; }
+
+        [TestMethod]
+        public void Test03()
+        {
+            {
+                var txt = "123";
+
+                void hello(string a)
+                {
+                    var a1= txt;
+                }
+
+
+                var tt = new[] { "1", "2", "3" };
+                foreach(var t in tt)
+                {
+                    hello(t);
+                }
+            }
+
+            {
+                Action<string> a;
+                a = x => { };
+            }
+            {
+               Func<string, string> a;
+
+                a = (x) => "123";
+
+                var b = a("12");
+
+            }
+            {
+                Expression<Func<string>> a;
+
+                a = () => Name;
+
+                
+            }
+            
+
         }
 
 

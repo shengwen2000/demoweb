@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace WebApp.Job
         private FdServerConfig _config;
         private IServiceProvider _srvprovder;
 
-        public FdConsole(IOptions<FdServerConfig> config, IServiceProvider srvprovder)
+        public FdConsole(IOptions<FdServerConfig> config, IServiceProvider srvprovder, IHostingEnvironment aa)
         {          
             _config = config.Value;
             _srvprovder = srvprovder;
